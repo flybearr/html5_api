@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            border: 1px solid gray;
+            background-color: #bde0e7;
+        }
+
+        .ball {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #f00;
+            border-radius: 50%;
+            border: 1px solid black;
+            pointer-events: none;
+            /* 不感應滑鼠動作 */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="rect"></div>
+
+    <button onclick="getData()">get data</button>
+    <br>
+    <textarea id="ta" cols="80" rows="30"></textarea>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        const rect = $('.rect');
+        let data, bIndex = 0;
+        data = JSON.parse(sessionStorage.getItem('myDivDraw'));
+
+
+        function randomColor() {
+            let c = '00000' + Math.floor(16777216 * Math.random()).toString(16);
+            return '#' + c.slice(c.length - 6);
+        }
+
+
+        function drawDot() {
+            const obj = data[bIndex];
+            if (!obj) return;
+            bIndex++;
+
+            const b = $(`<div class="ball"></div>`); // 建立元素
+            b.css({
+                backgroundColor: obj.bgc,
+                width: obj.size,
+                height: obj.size,
+                left: obj.x,
+                top: obj.y
+            });
+            rect.append(b);
+            setTimeout(drawDot, 30);
+        }
+        drawDot();
+
+
+
+
+
+
+        function getData() {
+            const ta = document.querySelector('#ta');
+            ta.value = JSON.stringify(data, null, 4);
+            sessionStorage.setItem('myDivDraw', JSON.stringify(data))
+        }
+    </script>
+</body>
+
+</html>

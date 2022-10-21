@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const map = new Map();
+        const obj = {};
+        map.set('shin', { name: 'bill' });
+        map.set({}, { name: 'billy1' });
+        map.set({}, { name: 'billy2' });
+        map.set(obj, { name: 'billy3' });
+        map.set(obj, { name: 'billy4' });
+
+        console.log(map.size);
+
+        map.forEach((v, k) => {
+            console.log({ v, k });
+        });
+
+
+const ar = [2,4,6,obj, obj, 6, {name:'david'}];
+        const set = new Set(ar);
+        console.log(set.size);
+        set.forEach((v)=>{
+            console.log({v});
+        });
+
+
+
+    </script>
+</body>
+
+</html>

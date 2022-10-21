@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .ball {
+            display: inline-block;
+            height: 50px;
+            width: 50px;
+            background-color: red;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .rect {
+            position: absolute;
+            left: 0px;
+            height: 200px;
+            width: 200px;
+            background-color: rgb(131, 191, 243);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="rect">
+        <div class="ball" draggable="true">7</div>
+        <div class="ball" draggable="true">8</div>
+        <div class="ball" draggable="true">9</div>
+    </div>
+
+    
+    <div class="rect" style="left: 300px; background-color: lightgreen"></div>
+
+    <script>
+        let dragTarget = null; // 拖拉的對象
+
+        const balls = document.querySelectorAll('.ball');
+        const rects = document.querySelectorAll('.rect');
+
+        const myDragStart = event=>{
+            dragTarget = event.currentTarget;
+        };
+        const myDragEnd = event=>{
+            dragTarget = null;
+        };
+
+        balls.forEach(b =>{
+            b.addEventListener('dragstart', myDragStart);
+            b.addEventListener('dragend', myDragEnd);
+        });
+
+        const myDrop = event =>{
+            const rect = event.currentTarget;
+            rect.append(dragTarget);
+        };
+        const myDragOver = event => event.preventDefault();
+
+        rects.forEach(r =>{
+            r.addEventListener('dragover', myDragOver);
+            r.addEventListener('drop', myDrop);
+        });
+
+    </script>
+
+</body>
+</html>

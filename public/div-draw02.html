@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            border: 1px solid gray;
+            background-color: #bde0e7;
+        }
+
+        .ball {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #f00;
+            border-radius: 50%;
+            border: 1px solid black;
+            pointer-events: none;
+            /* 不感應滑鼠動作 */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="rect"></div>
+
+    <button onclick="getData()">get data</button>
+    <br>
+    <textarea id="ta" cols="80" rows="30"></textarea>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        const rect = $('.rect');
+        const data = [];
+        let mouseX, mouseY;
+        let intervalId;
+
+        function randomColor() {
+            let c = '00000' + Math.floor(16777216 * Math.random()).toString(16);
+            return '#' + c.slice(c.length - 6);
+        }
+
+        const mDown = event => {
+            intervalId = setInterval(() => {
+                const size = 10 + Math.floor(21 * Math.random());
+                const x = mouseX - size / 2;
+                const y = mouseY - size / 2;
+                const bgc = randomColor();
+
+                const b = $(`<div class="ball"></div>`); // 建立元素
+                b.css({
+                    backgroundColor: bgc,
+                    width: size,
+                    height: size,
+                    left: x,
+                    top: y
+                });
+                rect.append(b);
+                data.push({
+                    x, y, bgc, size
+                });
+
+            }, 30);
+        };
+        const mUp = event => {
+            clearInterval(intervalId);
+        };
+        const mMove = event => {
+            mouseX = event.offsetX;
+            mouseY = event.offsetY;
+        }
+
+        rect.on('mousedown', mDown);
+        rect.on('mousemove', mMove);
+        $(window).on('mouseup', mUp);
+
+
+        function getData() {
+            const ta = document.querySelector('#ta');
+            ta.value = JSON.stringify(data, null, 4);
+            localStorage.setItem('myDivDraw', JSON.stringify(data))
+        }
+    </script>
+</body>
+
+</html>

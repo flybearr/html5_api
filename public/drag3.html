@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            position: absolute;
+            left: 0px;
+            width: 200px;
+            height: 200px;
+            background-color: aqua;
+
+        }
+
+        .ball {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: red;
+            text-align: center;
+            line-height: 3rem;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div draggable="true" class="ball">1</div>
+        <div draggable="true" class="ball">2</div>
+        <div draggable="true" class="ball">3</div>
+    </div>
+    <div class="box" style="left: 300px; background-color: lightgreen">
+
+    </div>
+
+    <script>
+        let dragTarget = null;
+        const boxs = document.querySelectorAll('.box');
+        const balls = document.querySelectorAll('.ball')
+
+        const mydragstart = event => {
+            dragTarget = event.currentTarget;
+        };
+        const mydragend = event => {
+            dragTarget = null;
+        };
+
+        balls.forEach(b1 => {
+            b1.addEventListener('dragstart', mydragstart);
+            b1.addEventListener('dragend', mydragend);
+        });
+
+
+        const mydrop = event => {
+            const box = event.currentTarget;
+            box.append(dragTarget);
+        };
+        const myDragOver = event => event.preventDefault();
+
+        boxs.forEach(b2 => {
+            b2.addEventListener('dragover', myDragOver);
+            b2.addEventListener('drop', mydrop);
+        });
+
+
+
+
+
+    </script>
+</body>
+
+</html>

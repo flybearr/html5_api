@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #cvs {
+            width: 800px;
+            height: 600px;
+            border: 1px black solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cvs"></canvas>
+    <script>
+        const cvs = document.querySelector('#cvs');
+        const paint = cvs.getContext('2d');
+
+        paint.beginPath();
+        paint.moveTo(50, 50);
+        paint.lineTo(150, 50);
+        paint.lineTo(50, 150);
+        paint.lineTo(50, 10);
+        paint.lineTo(500, 500);
+        paint.lineTo(200, 10);
+
+        paint.strokeStyle = 'tomato';
+        paint.lineWidth = 10;
+        paint.stroke();
+
+
+    </script>
+</body>
+
+</html>
